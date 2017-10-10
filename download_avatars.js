@@ -1,13 +1,15 @@
 var request = require('request');
 var fs = require('fs');
+var dotev = require('dotenv/config')
 var GITHUB_USER = "zzidante";
-var GITHUB_TOKEN = "cf00c4d270f935c36bbdfc63af249cab3b1fc983";
+var GITHUB_TOKEN = process.env.GIT_API_KEY;
 var repoOwner = process.argv[2];
 var repoName = process.argv[3];
 if (!repoOwner || !repoName) {
   console.log("You need to specify a Username and Repo name. Try again.")
     return;
 }
+
 var requestURL = {
   url: 'https://' + GITHUB_USER + ":" + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
   headers: {

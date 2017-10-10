@@ -1,10 +1,13 @@
 var request = require('request');
 var fs = require('fs');
-var codeInput = process.argv.slice(2)[0];
 var GITHUB_USER = "zzidante";
 var GITHUB_TOKEN = "cf00c4d270f935c36bbdfc63af249cab3b1fc983";
-var repoOwner = "jquery";
-var repoName = "jquery";
+var repoOwner = process.argv[2];
+var repoName = process.argv[3];
+if (!repoOwner || !repoName) {
+  console.log("You need to specify a Username and Repo name. Try again.")
+    return;
+}
 var requestURL = {
   url: 'https://' + GITHUB_USER + ":" + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
   headers: {
@@ -13,6 +16,7 @@ var requestURL = {
 };
 
 console.log('Welcome to the GitHub Avatar Downloader!');
+// console.log('Make sure you type in the name of the Contributor and then the Repo name.')
 
 function getRepoContributors(requestURL, cb) {
   var userObject = {}
@@ -40,4 +44,4 @@ function downloadImageByUrl(userObject) {
   .pipe(fs.createWriteStream('./avatars/' + userObject.username + '.jpg'))
 }
 
-getRepoContributors(requestURL, downloadImageByUrl)
+getRepoContributors(requestURL, downloadImageByUrl)  // initiate the process

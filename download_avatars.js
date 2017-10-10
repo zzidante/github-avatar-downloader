@@ -10,18 +10,25 @@ var requestURL = 'https://' + GITHUB_USER + ":" + GITHUB_TOKEN + '@api.github.co
 console.log('Welcome to the Github Avatar Downloader!');
 
 function getRepoContributors(repoOwner, repoName, cb) {
-  request.get(requestURL)
-    .on('error', function (err) {
-      console.log("That is not a valid command.");
-      throw err;
-    })
-    .on('response', function (response) {
-      console.log(`Response Status Code:  ${response.statusCode}: ${response.statusMessage} - ${response.headers['content-type']}`)
-    })
+  request(requestURL, function(err, response, body){
+    var data = JSON.parse(body);
+  })
+
+
+  // request.get(requestURL)
+  //   .on('error', function (err) {
+  //     console.log("That is not a valid command.");
+  //     throw err;
+  //   })
+  //   .on('response', function (response) {
+  //     console.log(`Response Status Code:  ${response.statusCode}: ${response.statusMessage} - ${response.headers['content-type']}`)
+  //   })
+
+
 }
 
 
-getRepoContributors("jquery", "jquery", function(err, result) {
+getRepoContributors(repoOwner, repoName, function(err, result) {
   console.log("Errors:", err);
   console.log("Result:", result);
 });

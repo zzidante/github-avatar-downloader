@@ -1,16 +1,17 @@
-var request = require('request');
-var fs = require('fs');
-var dotev = require('dotenv/config')
-var GITHUB_USER = "zzidante";
-var GITHUB_TOKEN = process.env.GIT_API_KEY;
-var repoOwner = process.argv[2];
-var repoName = process.argv[3];
+const request = require('request');
+const fs = require('fs');
+const dotev = require('dotenv/config')
+const GITHUB_USER = "zzidante";
+const GITHUB_TOKEN = process.env.GIT_API_KEY;
+const repoOwner = process.argv[2];
+const repoName = process.argv[3];
+
 if (!repoOwner || !repoName) {
-  console.log("You need to specify a Username and Repo name. Try again.")
+  console.log("You need to specify a Username and Repo name. Try again.");
     return;
 }
 
-var requestURL = {
+let requestURL = {
   url: 'https://' + GITHUB_USER + ":" + GITHUB_TOKEN + '@api.github.com/repos/' + repoOwner + '/' + repoName + '/contributors',
   headers: {
     'User-Agent': 'zzidante'
@@ -21,9 +22,9 @@ console.log('Welcome to the GitHub Avatar Downloader!');
 // console.log('Make sure you type in the name of the Contributor and then the Repo name.')
 
 function getRepoContributors(requestURL, cb) {
-  var userObject = {}
+  let userObject = {}
   request(requestURL, function(err, res, body) {
-    var data = JSON.parse(body);
+    const data = JSON.parse(body);
     if(!fs.existsSync("./avatars/")) {
       fs.mkdirSync("./avatars/")
     }

@@ -1,4 +1,4 @@
-const request = require('request');
+const REQ = require('request');
 const fs = require('fs');
 const dotev = require('dotenv/config');
 const GITHUB_USER = "zzidante";
@@ -16,7 +16,7 @@ function getRepoContributors(requestURL, cb) {
 
   let userObject = {};
 
-  request(requestURL, (_err, _res, body) => {
+  REQ(requestURL, (_err, _res, body) => {
     const data = JSON.parse(body);
 
     if(!fs.existsSync("./avatars/")) {
@@ -32,7 +32,7 @@ function getRepoContributors(requestURL, cb) {
 }
 
 function downloadImageByUrl(userObject) {
-  request.get(userObject.avatar)
+  REQ.get(userObject.avatar)
     .on('error', (err) => {
       throw err;
     })
